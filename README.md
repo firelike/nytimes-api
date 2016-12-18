@@ -34,8 +34,7 @@ other configuration settings. Make sure to remove `.dist` from your file.Your `n
 <?php
 return [
     'nytimes_service' => [
-        'service_url' => 'http://api.nytimes.com/svc/books/{version}/lists',
-        'service_version' => 'v3',
+        'service_url' => 'http://api.nytimes.com/svc/books/v3/lists',
         'api_key' => '<your-api-key>',
     ]
 ];
@@ -46,12 +45,18 @@ return [
 Calling from your code:
 
 ```php
-        use Firelike\NYTimes\Service\BestSellersService;
-        
+        use Firelike\NYTimes\Request\AbstractRequest;
+        use Firelike\NYTimes\Request\Books\Lists;
+        use Firelike\NYTimes\Service\BooksService;
+
         $service = new BestSellersService();
         
-        $options = [];
-        $records = $service->lists($options);
+        $request = new Lists();
+        $request->setList('hardcover-fiction')
+            ->setSortOrder(AbstractRequest::SORT_ORDER_ASC)
+            ->setOffset(2);
+
+        $records = $this->getService()->bestSellerList($request);
         
         var_dump($records);
         
@@ -64,8 +69,12 @@ php public/index.php usatoday lists -v
 ```
 ## Implemented Service Methods:
 
-* **lists**
-* **listNames**
+* **bestSellerList**
+* **bestSellerHistoryList**
+* **bestSellerListNames**
+* **bestSellerListOverview**
+* **bestSellerListByDate**
+* **reviews**
 
 
 

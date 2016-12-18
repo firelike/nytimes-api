@@ -2,14 +2,14 @@
 namespace Firelike\NYTimesTest\Service;
 
 
-use Firelike\NYTimes\Service\BestSellersService;
+use Firelike\NYTimes\Service\BooksService;
 
-class BestSellersTest extends \PHPUnit_Framework_TestCase
+class BooksServiceTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
      *
-     * @var BestSellersService
+     * @var BooksService
      */
     private $service;
 
@@ -19,7 +19,7 @@ class BestSellersTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->service = new BestSellersService();
+        $this->service = new BooksService();
     }
 
     /**

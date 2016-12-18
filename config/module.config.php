@@ -7,27 +7,63 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
-            Firelike\NYTimes\Service\BestSellersService::class => Firelike\NYTimes\Service\Factory\BestSellersServiceFactory::class,
+            Firelike\NYTimes\Service\BooksService::class => Firelike\NYTimes\Service\Factory\BooksServiceFactory::class,
         )
     ),
     'console' => array(
         'router' => array(
             'routes' => array(
-                'usatoday-lists' => array(
+                'nytimes-lists' => array(
                     'options' => array(
-                        'route' => 'usatoday lists [--verbose|-v]',
+                        'route' => 'nytimes lists [--verbose|-v]',
                         'defaults' => array(
                             'controller' => 'Firelike\NYTimes\Controller\Console',
                             'action' => 'lists'
                         )
                     )
                 ),
-                'usatoady-list-names' => array(
+                'nytimes-history' => array(
                     'options' => array(
-                        'route' => 'usatoday list-names [--verbose|-v]',
+                        'route' => 'nytimes history [--verbose|-v]',
+                        'defaults' => array(
+                            'controller' => 'Firelike\NYTimes\Controller\Console',
+                            'action' => 'history'
+                        )
+                    )
+                ),
+                'nytimes-list-names' => array(
+                    'options' => array(
+                        'route' => 'nytimes list-names [--verbose|-v]',
                         'defaults' => array(
                             'controller' => 'Firelike\NYTimes\Controller\Console',
                             'action' => 'list-names'
+                        )
+                    )
+                ),
+                'nytimes-list-overview' => array(
+                    'options' => array(
+                        'route' => 'nytimes overview [--verbose|-v]',
+                        'defaults' => array(
+                            'controller' => 'Firelike\NYTimes\Controller\Console',
+                            'action' => 'overview'
+                        )
+                    )
+                ),
+                'nytimes-list-by-date' => array(
+                    'options' => array(
+                        'route' => 'nytimes list-by-date [--verbose|-v]',
+                        'defaults' => array(
+                            'controller' => 'Firelike\NYTimes\Controller\Console',
+                            'action' => 'list-by-date'
+                        )
+                    )
+                ),
+                'nytimes-list-reviews' => array(
+                    'options' => array(
+                        'route' => 'nytimes reviews [--verbose|-v]',
+                        'defaults' => array(
+                            'controller' => 'Firelike\NYTimes\Controller\Console',
+                            'action' => 'reviews'
                         )
                     )
                 )

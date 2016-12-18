@@ -1,8 +1,7 @@
 <?php
 return [
     'nytimes_service' => [
-        'service_url' => 'http://api.nytimes.com/svc/books/{version}/lists',
-        'service_version' => 'v3',
+        'service_url' => 'http://api.nytimes.com/svc/books/v3',
         'api_key' => '',
     ]
 ];

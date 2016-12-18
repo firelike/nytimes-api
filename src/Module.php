@@ -17,8 +17,12 @@ class Module implements ConsoleUsageProviderInterface
     {
         return array(
             // Describe available commands
-            'usatoday lists [--verbose|-v]' => 'call lists service method',
-            'usatoday list-names [--verbose|-v]' => 'call listNames method',
+            'nytimes lists [--verbose|-v]' => 'call lists service method',
+            'nytimes history [--verbose|-v]' => 'call history method',
+            'nytimes list-names [--verbose|-v]' => 'call listNames method',
+            'nytimes overview [--verbose|-v]' => 'call overview method',
+            'nytimes list-by-date [--verbose|-v]' => 'call listByDate method',
+            'nytimes reviews [--verbose|-v]' => 'call reviews method',
 
             // Describe expected parameters
             array(

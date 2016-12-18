@@ -13,7 +13,7 @@ class ConsoleControllerFactory implements FactoryInterface
     public function __invoke(ContainerInterface $sm, $requestedName, array $options = null)
     {
 
-        $service = $sm->get('Firelike\NYTimes\Service\BestSellersService');
+        $service = $sm->get('Firelike\NYTimes\Service\BooksService');
 
         $controller = new ConsoleController();
         $controller->setService($service);

@@ -1,6 +1,8 @@
 <?php
-namespace Firelike\NYTimes\Request;
+namespace Firelike\NYTimes\Request\Books;
 
+
+use Firelike\NYTimes\Request\AbstractRequest;
 
 class Search extends AbstractRequest
 {
@@ -29,9 +31,7 @@ class Search extends AbstractRequest
     {
         parent::__construct($args);
 
-        parent::setVersion($args['version']);
         parent::setApiKey($args['api-key']);
-        parent::setResponseFormat($args['response-format']);
         parent::setSortOrder($args['sort-order']);
         parent::setOffset($args['offset']);
 
