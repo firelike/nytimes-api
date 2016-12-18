@@ -3,6 +3,7 @@ namespace Firelike\NYTimes\Validator;
 
 
 use Zend\Validator\AbstractValidator;
+use Zend\Validator\Callback;
 
 class OffsetValidator extends AbstractValidator
 {
@@ -13,7 +14,7 @@ class OffsetValidator extends AbstractValidator
     public function isValid($value)
     {
 
-        $validator = new \Zend\Validator\Callback(function ($value) {
+        $validator = new Callback(function ($value) {
             return ($value % 20) == 0;
         });
 

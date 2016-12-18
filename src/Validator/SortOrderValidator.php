@@ -3,6 +3,7 @@ namespace Firelike\NYTimes\Validator;
 
 
 use Zend\Validator\AbstractValidator;
+use Zend\Validator\InArray;
 
 class SortOrderValidator extends AbstractValidator
 {
