@@ -28,7 +28,7 @@ class BooksServiceFactory implements FactoryInterface
             }
 
             if (isset($config['nytimes_service']['format'])) {
-                $service->setVersion($config['nytimes_service']['format']);
+                $service->setFormat($config['nytimes_service']['format']);
             }
 
             if (isset($config['nytimes_service']['apy_key'])) {
