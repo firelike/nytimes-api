@@ -37,6 +37,8 @@ class BooksServiceFactory implements FactoryInterface
 
         }
 
+        $service->setRequestValidator($sm->get('Firelike\NYTimes\Validator\BooksServiceRequestValidator'));
+
         return $service;
 
     }

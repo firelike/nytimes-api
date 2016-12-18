@@ -8,6 +8,9 @@ return array(
     'service_manager' => array(
         'factories' => array(
             Firelike\NYTimes\Service\BooksService::class => Firelike\NYTimes\Service\Factory\BooksServiceFactory::class,
+            Firelike\NYTimes\Validator\BooksServiceRequestValidator::class => Firelike\NYTimes\Validator\Factory\BooksServiceRequestValidatorFactory::class,
+            Firelike\NYTimes\Validator\SortOrderValidator::class => Firelike\NYTimes\Validator\Factory\SortOrderValidatorFactory::class,
+            Firelike\NYTimes\Validator\OffsetValidator::class => Firelike\NYTimes\Validator\Factory\OffsetValidatorFactory::class,
         )
     ),
     'console' => array(

@@ -24,8 +24,7 @@ class ConsoleController extends AbstractConsoleController
         $request = new Lists();
         $request->setList('hardcover-fiction')
             ->setSortOrder(AbstractRequest::SORT_ORDER_ASC)
-            ->setOffset(2);
-
+            ->setOffset(20);
         $records = $this->getService()->bestSellerList($request);
         var_dump($records);
 

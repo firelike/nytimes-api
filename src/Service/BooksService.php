@@ -1,6 +1,7 @@
 <?php
 namespace Firelike\NYTimes\Service;
 
+use Firelike\NYTimes\Request\AbstractRequest;
 use Firelike\NYTimes\Request\Books\History;
 use Firelike\NYTimes\Request\Books\Overview;
 use Firelike\NYTimes\Request\Books\Reviews;
@@ -32,50 +33,121 @@ class BooksService
      */
     protected $apiKey;
 
+    /**
+     * @var \Firelike\NYTimes\Validator\BooksServiceRequestValidator
+     */
+    protected $requestValidator;
 
+    /**
+     * @param Lists $request
+     * @return array|mixed
+     */
     public function bestSellerList(Lists $request)
     {
         $request->setApiKey($this->getApiKey());
+
+        $validator = $this->getRequestValidator();
+        if (!$validator->isValid($request)) {
+            return $validator->getMessages();
+        }
+
         $httpResponse = $this->apiCall('/lists', $request->toArray());
         return @json_decode($httpResponse->getBody()->getContents());
     }
 
+    /**
+     * @param History $request
+     * @return array|mixed
+     */
     public function bestSellerHistoryList(History $request)
     {
         $request->setApiKey($this->getApiKey());
+
+        $validator = $this->getRequestValidator();
+        if (!$validator->isValid($request)) {
+            return $validator->getMessages();
+        }
+
         $httpResponse = $this->apiCall('/lists/best-sellers/history', $request->toArray());
         return @json_decode($httpResponse->getBody()->getContents());
     }
 
+    /**
+     * @param ListNames $request
+     * @return array|mixed
+     */
     public function bestSellerListNames(ListNames $request)
     {
         $request->setApiKey($this->getApiKey());
+
+        $validator = $this->getRequestValidator();
+        if (!$validator->isValid($request)) {
+            return $validator->getMessages();
+        }
+
         $httpResponse = $this->apiCall('/lists/names', $request->toArray());
         return @json_decode($httpResponse->getBody()->getContents());
     }
 
+    /**
+     * @param Overview $request
+     * @return array|mixed
+     */
     public function bestSellerListOverview(Overview $request)
     {
         $request->setApiKey($this->getApiKey());
+
+        $validator = $this->getRequestValidator();
+        if (!$validator->isValid($request)) {
+            return $validator->getMessages();
+        }
+
         $httpResponse = $this->apiCall('/lists/overview', $request->toArray());
         return @json_decode($httpResponse->getBody()->getContents());
     }
 
+    /**
+     * @param Lists $request
+     * @return array|mixed
+     */
     public function bestSellerListByDate(Lists $request)
     {
         $request->setApiKey($this->getApiKey());
+
+        $validator = $this->getRequestValidator();
+        if (!$validator->isValid($request)) {
+            return $validator->getMessages();
+        }
+
         $path = sprintf('/lists/%s/%s', $request->getDate(), $request->getList());
         $httpResponse = $this->apiCall($path, $request->toArray());
         return @json_decode($httpResponse->getBody()->getContents());
     }
 
+    /**
+     * @param Reviews $request
+     * @return array|mixed
+     */
     public function reviews(Reviews $request)
     {
         $request->setApiKey($this->getApiKey());
+
+        $validator = $this->getRequestValidator();
+        if (!$validator->isValid($request)) {
+            return $validator->getMessages();
+        }
+
         $httpResponse = $this->apiCall('/reviews', $request->toArray());
         return @json_decode($httpResponse->getBody()->getContents());
     }
 
+
+    /**
+     * @param string $path
+     * @param array $query
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @throws \Exception
+     */
     public function apiCall($path, $query)
     {
         if (!$this->getServiceUrl() || !$this->getVersion() || !$this->getFormat()) {
@@ -165,6 +237,22 @@ class BooksService
     public function setApiKey($apiKey)
     {
         $this->apiKey = $apiKey;
+    }
+
+    /**
+     * @return \Firelike\NYTimes\Validator\BooksServiceRequestValidator
+     */
+    public function getRequestValidator()
+    {
+        return $this->requestValidator;
+    }
+
+    /**
+     * @param \Firelike\NYTimes\Validator\BooksServiceRequestValidator $requestValidator
+     */
+    public function setRequestValidator($requestValidator)
+    {
+        $this->requestValidator = $requestValidator;
     }
 
 
