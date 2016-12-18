@@ -36,6 +36,7 @@ return [
     'nytimes_service' => [
         'service_url' => 'https://api.nytimes.com',
         'version' => 'v3',
+        'format' => 'json',
         'api_key' => '<your-api-key>',
     ]
 ];

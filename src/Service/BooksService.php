@@ -3,6 +3,7 @@ namespace Firelike\NYTimes\Service;
 
 use Firelike\NYTimes\Request\Books\History;
 use Firelike\NYTimes\Request\Books\Overview;
+use Firelike\NYTimes\Request\Books\Reviews;
 use GuzzleHttp\Exception\ClientException;
 use Firelike\NYTimes\Request\Books\ListNames;
 use Firelike\NYTimes\Request\Books\Lists;
@@ -22,6 +23,10 @@ class BooksService
      * @var string
      */
     protected $version;
+    /**
+     * @var string
+     */
+    protected $format;
     /**
      * @var string
      */
@@ -64,7 +69,7 @@ class BooksService
         return @json_decode($httpResponse->getBody()->getContents());
     }
 
-    public function reviews(ListNames $request)
+    public function reviews(Reviews $request)
     {
         $request->setApiKey($this->getApiKey());
         $httpResponse = $this->apiCall('/reviews', $request->toArray());
@@ -73,16 +78,16 @@ class BooksService
 
     public function apiCall($path, $query)
     {
-        if (!$this->getServiceUrl()) {
+        if (!$this->getServiceUrl() || !$this->getVersion() || !$this->getFormat()) {
             throw new \Exception('Required Parameter is not set');
         }
 
-        // append response format
-        $path = $path . '.json';
+        // prepend service path and append response format
+        $path = sprintf('/svc/books/%s%s.%s', $this->getVersion(), $path, $this->getFormat());
 
         try {
             $client = new Client([
-                'base_uri' => sprintf('%s/svc/books/%s', $this->getServiceUrl(), $this->getVersion())
+                'base_uri' => $this->getServiceUrl()
             ]);
             return $client->request('GET', $path, array(
                     'query' => $query
@@ -127,6 +132,22 @@ class BooksService
     public function setVersion($version)
     {
         $this->version = $version;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
+    /**
+     * @param string $format
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
     }
 
 
