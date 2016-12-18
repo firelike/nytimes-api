@@ -22,19 +22,19 @@ class BooksServiceRequestValidator extends AbstractValidator
      */
     public function isValid($request)
     {
-//        if ($request instanceof \Firelike\NYTimes\Request\AbstractRequest) {
-//            return false;
-//        }
-//
-//        if (method_exists($request, 'getSortOrder')) {
-//            if ($request->getSortOrder()) {
-//                $validator = $this->getSortOrderValidator();
-//                if (!$validator->isValid($request->getSortOrder())) {
-//                    $this->setMessage('Invalid sort order');
-//                    return false;
-//                }
-//            }
-//        }
+        if (!$request instanceof \Firelike\NYTimes\Request\AbstractRequest) {
+            return false;
+        }
+
+        if (method_exists($request, 'getSortOrder')) {
+            if ($request->getSortOrder()) {
+                $validator = $this->getSortOrderValidator();
+                if (!$validator->isValid($request->getSortOrder())) {
+                    $this->setMessage('Invalid sort order');
+                    return false;
+                }
+            }
+        }
 
         if (method_exists($request, 'getOffset')) {
             if ($request->getOffset()) {
