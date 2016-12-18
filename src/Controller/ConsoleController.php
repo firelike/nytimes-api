@@ -22,10 +22,18 @@ class ConsoleController extends AbstractConsoleController
         $this->markBegin();
 
         $request = new Lists();
-        $request->setList('hardcover-fiction')
-            ->setSortOrder(AbstractRequest::SORT_ORDER_ASC)
-            ->setOffset(20);
+
+        $listName = $this->getRequest()->getParam('list-name');
+        if ($listName) {
+            $request->setList($listName);
+        } else {
+            $request->setList('hardcover-fiction');
+        }
+
+        $request->setSortOrder(AbstractRequest::SORT_ORDER_ASC);
+
         $records = $this->getService()->bestSellerList($request);
+
         var_dump($records);
 
         $this->markEnd();
@@ -36,9 +44,15 @@ class ConsoleController extends AbstractConsoleController
         $this->markBegin();
 
         $request = new History();
-        $request->setAuthor('Michael Connelly');
-        $records = $this->getService()
-            ->bestSellerHistoryList($request);
+
+        $author = $this->getRequest()->getParam('author');
+        if ($author) {
+            $request->setAuthor($author);
+        } else {
+            $request->setAuthor('Michael Connelly');
+        }
+
+        $records = $this->getService()->bestSellerHistoryList($request);
 
         var_dump($records);
 
@@ -51,8 +65,7 @@ class ConsoleController extends AbstractConsoleController
 
         $request = new ListNames();
 
-        $records = $this->getService()
-            ->bestSellerListNames($request);
+        $records = $this->getService()->bestSellerListNames($request);
 
         var_dump($records);
 
@@ -66,8 +79,7 @@ class ConsoleController extends AbstractConsoleController
         $request = new Overview();
         $request->setPublishedDate('2016-01-10');
 
-        $records = $this->getService()
-            ->bestSellerListOverview($request);
+        $records = $this->getService()->bestSellerListOverview($request);
 
         var_dump($records);
 
@@ -79,8 +91,20 @@ class ConsoleController extends AbstractConsoleController
         $this->markBegin();
 
         $request = new Lists();
-        $request->setList('hardcover-fiction')
-            ->setDate('2016-10-21');
+
+        $listName = $this->getRequest()->getParam('list-name');
+        if ($listName) {
+            $request->setList($listName);
+        } else {
+            $request->setList('hardcover-fiction');
+        }
+
+        $date = $this->getRequest()->getParam('date');
+        if ($date) {
+            $request->setDate($date);
+        } else {
+            $request->setDate('2016-10-21');
+        }
 
         $records = $this->getService()->bestSellerListByDate($request);
 
@@ -94,7 +118,14 @@ class ConsoleController extends AbstractConsoleController
         $this->markBegin();
 
         $request = new Reviews();
-        $request->setAuthor('John Grisham');
+
+        $author = $this->getRequest()->getParam('author');
+        if ($author) {
+            $request->setAuthor($author);
+        } else {
+            $request->setAuthor('John Grisham');
+        }
+
         $records = $this->getService()->reviews($request);
         var_dump($records);
 

@@ -18,7 +18,7 @@ return array(
             'routes' => array(
                 'nytimes-lists' => array(
                     'options' => array(
-                        'route' => 'nytimes lists [--verbose|-v]',
+                        'route' => 'nytimes lists [--list-name=] [--verbose|-v]',
                         'defaults' => array(
                             'controller' => 'Firelike\NYTimes\Controller\Console',
                             'action' => 'lists'
@@ -27,7 +27,7 @@ return array(
                 ),
                 'nytimes-history' => array(
                     'options' => array(
-                        'route' => 'nytimes history [--verbose|-v]',
+                        'route' => 'nytimes history [--author=] [--verbose|-v]',
                         'defaults' => array(
                             'controller' => 'Firelike\NYTimes\Controller\Console',
                             'action' => 'history'
@@ -54,7 +54,7 @@ return array(
                 ),
                 'nytimes-list-by-date' => array(
                     'options' => array(
-                        'route' => 'nytimes list-by-date [--verbose|-v]',
+                        'route' => 'nytimes list-by-date [--list-name=] [--date=] [--verbose|-v]',
                         'defaults' => array(
                             'controller' => 'Firelike\NYTimes\Controller\Console',
                             'action' => 'list-by-date'
@@ -63,7 +63,7 @@ return array(
                 ),
                 'nytimes-list-reviews' => array(
                     'options' => array(
-                        'route' => 'nytimes reviews [--verbose|-v]',
+                        'route' => 'nytimes reviews [--author=] [--verbose|-v]',
                         'defaults' => array(
                             'controller' => 'Firelike\NYTimes\Controller\Console',
                             'action' => 'reviews'
