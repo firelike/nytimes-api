@@ -60,7 +60,7 @@ Calling from your code:
 Using the console:
 
 ```php
-php public/index.php shareasale activity -v
+php public/index.php usatoday lists -v
 ```
 ## Implemented Service Methods:
 
