@@ -21,6 +21,10 @@ class BooksService
     /**
      * @var string
      */
+    protected $version;
+    /**
+     * @var string
+     */
     protected $apiKey;
 
 
@@ -78,7 +82,7 @@ class BooksService
 
         try {
             $client = new Client([
-                'base_uri' => $this->getServiceUrl()
+                'base_uri' => sprintf('%s/svc/books/%s', $this->getServiceUrl(), $this->getVersion())
             ]);
             return $client->request('GET', $path, array(
                     'query' => $query
@@ -107,6 +111,22 @@ class BooksService
     public function setServiceUrl($serviceUrl)
     {
         $this->serviceUrl = $serviceUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * @param string $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
     }
 
 

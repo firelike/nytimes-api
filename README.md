@@ -34,7 +34,8 @@ other configuration settings. Make sure to remove `.dist` from your file.Your `n
 <?php
 return [
     'nytimes_service' => [
-        'service_url' => 'https://api.nytimes.com/svc/books/v3',
+        'service_url' => 'https://api.nytimes.com',
+        'version' => 'v3',
         'api_key' => '<your-api-key>',
     ]
 ];

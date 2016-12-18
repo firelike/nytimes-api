@@ -16,10 +16,15 @@ class BooksServiceFactory implements FactoryInterface
         $service = new BooksService();
 
         $config = $sm->get('Config');
+
         if (isset($config['nytimes_service'])) {
 
             if (isset($config['nytimes_service']['service_url'])) {
                 $service->setServiceUrl($config['nytimes_service']['service_url']);
+            }
+
+            if (isset($config['nytimes_service']['version'])) {
+                $service->setVersion($config['nytimes_service']['version']);
             }
 
             if (isset($config['nytimes_service']['apy_key'])) {
