@@ -45,13 +45,13 @@ class History extends AbstractRequest
     public function toArray()
     {
         return array_merge(parent::toArray(), array(
-            'age-group' => $this->getListName(),
-            'author' => $this->getDate(),
-            'contributor' => $this->getSortBy(),
-            'isbn' => $this->getSortBy(),
-            'price' => $this->getSortBy(),
-            'publisher' => $this->getSortBy(),
-            'title' => $this->getSortBy(),
+            'age-group' => $this->getAuthor(),
+            'author' => $this->getAuthor(),
+            'contributor' => $this->getContributor(),
+            'isbn' => $this->getIsbn(),
+            'price' => $this->getPrice(),
+            'publisher' => $this->getPublisher(),
+            'title' => $this->getTitle(),
         ));
 
     }
