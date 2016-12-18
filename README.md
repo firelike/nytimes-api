@@ -65,7 +65,7 @@ Calling from your code:
 Using the console:
 
 ```php
-php public/index.php usatoday lists -v
+php public/index.php nytimes lists -v
 ```
 ## Implemented Service Methods:
 
