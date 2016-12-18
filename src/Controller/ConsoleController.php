@@ -32,9 +32,6 @@ class ConsoleController extends AbstractConsoleController
 
         $request->setSortOrder(AbstractRequest::SORT_ORDER_ASC);
 
-        var_dump($request);
-        die();
-
         $records = $this->getService()->bestSellerList($request);
 
         var_dump($records);

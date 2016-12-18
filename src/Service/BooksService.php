@@ -50,8 +50,11 @@ class BooksService
         if (!$validator->isValid($request)) {
             return $validator->getMessages();
         }
+        var_dump($validator->isValid($request));
 
         $httpResponse = $this->apiCall('/lists', $request->toArray());
+        var_dump($httpResponse);
+        die();
         return @json_decode($httpResponse->getBody()->getContents());
     }
 
