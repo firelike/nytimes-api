@@ -55,8 +55,7 @@ Calling from your code:
         
         $request = new Lists();
         $request->setList('hardcover-fiction')
-            ->setSortOrder(AbstractRequest::SORT_ORDER_ASC)
-            ->setOffset(2);
+            ->setSortOrder(AbstractRequest::SORT_ORDER_ASC);
 
         $records = $this->getService()->bestSellerList($request);
         
