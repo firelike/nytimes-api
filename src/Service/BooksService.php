@@ -52,7 +52,7 @@ class BooksService
         }
 
         $httpResponse = $this->apiCall('/lists', $request->toArray());
-        return @json_decode($httpResponse->getBody()->getContents());
+        return @json_decode($httpResponse->getBody()->getContents(), true);
     }
 
     /**
@@ -69,7 +69,7 @@ class BooksService
         }
 
         $httpResponse = $this->apiCall('/lists/best-sellers/history', $request->toArray());
-        return @json_decode($httpResponse->getBody()->getContents());
+        return @json_decode($httpResponse->getBody()->getContents(), true);
     }
 
     /**
@@ -86,7 +86,7 @@ class BooksService
         }
 
         $httpResponse = $this->apiCall('/lists/names', $request->toArray());
-        return @json_decode($httpResponse->getBody()->getContents());
+        return @json_decode($httpResponse->getBody()->getContents(), true);
     }
 
     /**
@@ -103,7 +103,7 @@ class BooksService
         }
 
         $httpResponse = $this->apiCall('/lists/overview', $request->toArray());
-        return @json_decode($httpResponse->getBody()->getContents());
+        return @json_decode($httpResponse->getBody()->getContents(), true);
     }
 
     /**
@@ -121,7 +121,7 @@ class BooksService
 
         $path = sprintf('/lists/%s/%s', $request->getDate(), $request->getList());
         $httpResponse = $this->apiCall($path, $request->toArray());
-        return @json_decode($httpResponse->getBody()->getContents());
+        return @json_decode($httpResponse->getBody()->getContents(), true);
     }
 
     /**
@@ -138,7 +138,7 @@ class BooksService
         }
 
         $httpResponse = $this->apiCall('/reviews', $request->toArray());
-        return @json_decode($httpResponse->getBody()->getContents());
+        return @json_decode($httpResponse->getBody()->getContents(), true);
     }
 
 
