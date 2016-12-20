@@ -2,7 +2,9 @@
 namespace Firelike\NYTimes\Validator;
 
 
+use Firelike\NYTimes\Request\AbstractRequest;
 use Zend\Validator\AbstractValidator;
+use Zend\Validator\Isbn\Isbn13;
 
 class BooksServiceRequestValidator extends AbstractValidator
 {
@@ -22,7 +24,7 @@ class BooksServiceRequestValidator extends AbstractValidator
      */
     public function isValid($request)
     {
-        if (!$request instanceof \Firelike\NYTimes\Request\AbstractRequest) {
+        if (!$request instanceof AbstractRequest) {
             return false;
         }
 
@@ -49,7 +51,7 @@ class BooksServiceRequestValidator extends AbstractValidator
 
         if (method_exists($request, 'getIsbn')) {
             if ($request->getIsbn()) {
-                $validator = new \Zend\Validator\Isbn\Isbn13();
+                $validator = new Isbn13();
                 if (!$validator->isValid($request->getIsbn())) {
                     $this->setMessage('Invalid ISBN-13');
                     return false;

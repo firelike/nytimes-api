@@ -34,9 +34,6 @@ other configuration settings. Make sure to remove `.dist` from your file.Your `n
 <?php
 return [
     'nytimes_service' => [
-        'service_url' => 'https://api.nytimes.com',
-        'version' => 'v3',
-        'format' => 'json',
         'api_key' => '<your-api-key>',
     ]
 ];
@@ -57,8 +54,12 @@ Calling from your code:
         $request->setList('hardcover-fiction')
             ->setSortOrder(AbstractRequest::SORT_ORDER_ASC);
 
-        $records = $this->getService()->bestSellerList($request);
+        $result = $this->getService()->bestSellerList($request);
         
+        $numberOfRecords = $result->toArray()['num_results];
+        var_dump($numberOfRecords);
+
+        $records= $result->toArray()['results];
         var_dump($records);
         
 ```

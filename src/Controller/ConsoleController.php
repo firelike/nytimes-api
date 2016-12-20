@@ -32,7 +32,9 @@ class ConsoleController extends AbstractConsoleController
 
         $request->setSortOrder(AbstractRequest::SORT_ORDER_ASC);
 
-        $records = $this->getService()->bestSellerList($request);
+        $result = $this->getService()->bestSellerList($request);
+
+        $records = $result->toArray()['results'];
 
         var_dump($records);
 
@@ -52,7 +54,9 @@ class ConsoleController extends AbstractConsoleController
             $request->setAuthor('Michael Connelly');
         }
 
-        $records = $this->getService()->bestSellerHistoryList($request);
+        $result = $this->getService()->bestSellerHistoryList($request);
+
+        $records = $result->toArray()['results'];
 
         var_dump($records);
 
@@ -65,7 +69,9 @@ class ConsoleController extends AbstractConsoleController
 
         $request = new ListNames();
 
-        $records = $this->getService()->bestSellerListNames($request);
+        $result = $this->getService()->bestSellerListNames($request);
+
+        $records = $result->toArray()['results'];
 
         var_dump($records);
 
@@ -79,7 +85,9 @@ class ConsoleController extends AbstractConsoleController
         $request = new Overview();
         $request->setPublishedDate('2016-01-10');
 
-        $records = $this->getService()->bestSellerListOverview($request);
+        $result = $this->getService()->bestSellerListOverview($request);
+
+        $records = $result->toArray()['results'];
 
         var_dump($records);
 
@@ -106,7 +114,9 @@ class ConsoleController extends AbstractConsoleController
             $request->setDate('2016-10-21');
         }
 
-        $records = $this->getService()->bestSellerListByDate($request);
+        $result = $this->getService()->bestSellerListByDate($request);
+
+        $records = $result->toArray()['results'];
 
         var_dump($records);
 
@@ -126,7 +136,10 @@ class ConsoleController extends AbstractConsoleController
             $request->setAuthor('John Grisham');
         }
 
-        $records = $this->getService()->reviews($request);
+        $result = $this->getService()->reviews($request);
+
+        $records = $result->toArray()['results'];
+
         var_dump($records);
 
 

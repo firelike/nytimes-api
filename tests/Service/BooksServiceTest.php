@@ -25,6 +25,9 @@ use Firelike\NYTimes\Service\BooksService;
 use Firelike\NYTimes\Validator\BooksServiceRequestValidator;
 use Firelike\NYTimes\Validator\OffsetValidator;
 use Firelike\NYTimes\Validator\SortOrderValidator;
+use GuzzleHttp\Client;
+use GuzzleHttp\Command\Guzzle\Description;
+use GuzzleHttp\Command\ResultInterface;
 
 
 class BooksServiceTest extends \PHPUnit_Framework_TestCase
@@ -39,18 +42,17 @@ class BooksServiceTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $config = [
-            'service_url' => 'https://api.nytimes.com',
-            'version' => 'v3',
-            'format' => 'json',
-            'api_key' => '',
-        ];
+        $client = new Client();
 
-        $this->service = new BooksService();
-        $this->service->setServiceUrl($config['service_url']);
-        $this->service->setVersion($config['version']);
-        $this->service->setFormat($config['format']);
-        $this->service->setApiKey($config['api_key']);
+        $config = include __DIR__ . '/../../config/module.config.php';
+        $description = new Description($config['nytimes_service']['description']);
+
+        $this->service = new BooksService($client, $description);
+
+        // to run the test set an environment variable
+        // with name 'nytimes_api_key' and value your NYTimes API key
+        $apiKey = getenv('nytimes_api_key');
+        $this->service->setApiKey($apiKey);
 
         $validator = new BooksServiceRequestValidator();
         $validator->setOffsetValidator(new OffsetValidator());
@@ -66,32 +68,37 @@ class BooksServiceTest extends \PHPUnit_Framework_TestCase
         $request->setList('fiction');
 
         $result = $this->service->bestSellerList($request);
-        $this->assertArrayHasKey('results', $result);
+        $this->assertInstanceOf(ResultInterface::class, $result);
+        $this->assertArrayHasKey('num_results', $result->toArray());
+        $this->assertArrayHasKey('results', $result->toArray());
 
     }
 
     public function testHistory()
     {
         $request = new History();
-
         $result = $this->service->bestSellerHistoryList($request);
-        $this->assertArrayHasKey('results', $result);
+        $this->assertInstanceOf(ResultInterface::class, $result);
+        $this->assertArrayHasKey('num_results', $result->toArray());
+        $this->assertArrayHasKey('results', $result->toArray());
     }
 
     public function testListNames()
     {
         $request = new ListNames();
-
         $result = $this->service->bestSellerListNames($request);
-        $this->assertArrayHasKey('results', $result);
+        $this->assertInstanceOf(ResultInterface::class, $result);
+        $this->assertArrayHasKey('num_results', $result->toArray());
+        $this->assertArrayHasKey('results', $result->toArray());
     }
 
     public function testOverview()
     {
         $request = new Overview();
-
         $result = $this->service->bestSellerListOverview($request);
-        $this->assertArrayHasKey('results', $result);
+        $this->assertInstanceOf(ResultInterface::class, $result);
+        $this->assertArrayHasKey('num_results', $result->toArray());
+        $this->assertArrayHasKey('results', $result->toArray());
     }
 
     public function testListByDate()
@@ -100,7 +107,9 @@ class BooksServiceTest extends \PHPUnit_Framework_TestCase
         $request->setDate('2016-10-20')->setList('hardcover-fiction');
 
         $result = $this->service->bestSellerListByDate($request);
-        $this->assertArrayHasKey('results', $result);
+        $this->assertInstanceOf(ResultInterface::class, $result);
+        $this->assertArrayHasKey('num_results', $result->toArray());
+        $this->assertArrayHasKey('results', $result->toArray());
     }
 
     public function testReviews()
@@ -109,7 +118,9 @@ class BooksServiceTest extends \PHPUnit_Framework_TestCase
         $request->setAuthor('Michael Connelly');
 
         $result = $this->service->reviews($request);
-        $this->assertArrayHasKey('results', $result);
+        $this->assertInstanceOf(ResultInterface::class, $result);
+        $this->assertArrayHasKey('num_results', $result->toArray());
+        $this->assertArrayHasKey('results', $result->toArray());
     }
 
 }
