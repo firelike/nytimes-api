@@ -48,7 +48,7 @@ class BooksServiceTest extends \PHPUnit_Framework_TestCase
             new Response(200, [], '{"num_results":"10","results":"{}"}'),
             new Response(200, [], '{"num_results":"20","results":"{}"}'),
         ];
-        
+
         foreach ($responses as $response) {
             $mock->append($response);
         }
