@@ -28,7 +28,8 @@ use Firelike\NYTimes\Validator\SortOrderValidator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Guzzle\Description;
 use GuzzleHttp\Command\ResultInterface;
-
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
 
 class BooksServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -42,7 +43,19 @@ class BooksServiceTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $client = new Client();
+        $mock = new MockHandler();
+        $responses=[
+            new Response(200, [], '{"num_results":"10","results":"{}"}'),
+            new Response(200, [], '{"num_results":"20","results":"{}"}'),
+        ];
+        
+        foreach ($responses as $response) {
+            $mock->append($response);
+        }
+
+        $client = new Client([
+            'handler' => $mock
+        ]);
 
         $config = include __DIR__ . '/../../config/module.config.php';
         $description = new Description($config['nytimes_service']['description']);
