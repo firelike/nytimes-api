@@ -136,7 +136,11 @@ class ConsoleController extends AbstractConsoleController
 
     public function markBegin()
     {
-        $this->getConsole()->writeLine('============== BEGIN ==============');
+        $delimiter = str_repeat('=', 10);
+        $this->getConsole()->writeLine(implode('BEGIN', [
+            $delimiter,
+            $delimiter
+        ]));
     }
 
     public function markEnd()
@@ -148,7 +152,11 @@ class ConsoleController extends AbstractConsoleController
             $this->getConsole()->writeLine("Done");
         }
 
-        $this->getConsole()->writeLine('============== END ==============');
+        $delimiter = str_repeat('=', 10);
+        $this->getConsole()->writeLine(implode('END', [
+            $delimiter,
+            $delimiter
+        ]));
     }
 
     /**

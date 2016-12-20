@@ -26,6 +26,7 @@ class BooksServiceRequestValidator extends AbstractValidator
             return false;
         }
 
+
         if (method_exists($request, 'getSortOrder')) {
             if ($request->getSortOrder()) {
                 $validator = $this->getSortOrderValidator();

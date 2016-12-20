@@ -11,6 +11,8 @@ use Firelike\NYTimes\Request\Books\Lists;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Command\Guzzle\GuzzleClient;
+use GuzzleHttp\Command\Guzzle\Description;
 
 
 class BooksService
@@ -50,9 +52,7 @@ class BooksService
         if (!$validator->isValid($request)) {
             return $validator->getMessages();
         }
-
-        $httpResponse = $this->apiCall('/lists', $request->toArray());
-        return @json_decode($httpResponse->getBody()->getContents(), true);
+        return $this->getClient()->lists(array_filter($request->toArray()));
     }
 
     /**
@@ -68,8 +68,7 @@ class BooksService
             return $validator->getMessages();
         }
 
-        $httpResponse = $this->apiCall('/lists/best-sellers/history', $request->toArray());
-        return @json_decode($httpResponse->getBody()->getContents(), true);
+        return $this->getClient()->history(array_filter($request->toArray()));
     }
 
     /**
@@ -85,8 +84,7 @@ class BooksService
             return $validator->getMessages();
         }
 
-        $httpResponse = $this->apiCall('/lists/names', $request->toArray());
-        return @json_decode($httpResponse->getBody()->getContents(), true);
+        return $this->getClient()->listNames(array_filter($request->toArray()));
     }
 
     /**
@@ -102,8 +100,7 @@ class BooksService
             return $validator->getMessages();
         }
 
-        $httpResponse = $this->apiCall('/lists/overview', $request->toArray());
-        return @json_decode($httpResponse->getBody()->getContents(), true);
+        return $this->getClient()->overview(array_filter($request->toArray()));
     }
 
     /**
@@ -119,9 +116,7 @@ class BooksService
             return $validator->getMessages();
         }
 
-        $path = sprintf('/lists/%s/%s', $request->getDate(), $request->getList());
-        $httpResponse = $this->apiCall($path, $request->toArray());
-        return @json_decode($httpResponse->getBody()->getContents(), true);
+        return $this->getClient()->listsByDate(array_filter($request->toArray()));
     }
 
     /**
@@ -137,42 +132,257 @@ class BooksService
             return $validator->getMessages();
         }
 
-        $httpResponse = $this->apiCall('/reviews', $request->toArray());
-        return @json_decode($httpResponse->getBody()->getContents(), true);
+        return $this->getClient()->reviews(array_filter($request->toArray()));
     }
 
-
-    /**
-     * @param string $path
-     * @param array $query
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     * @throws \Exception
-     */
-    public function apiCall($path, $query)
+    protected function pathHelper($path)
     {
         if (!$this->getServiceUrl() || !$this->getVersion() || !$this->getFormat()) {
             throw new \Exception('Required Parameter is not set');
         }
 
         // prepend service path and append response format
-        $path = sprintf('/svc/books/%s%s.%s', $this->getVersion(), $path, $this->getFormat());
+        return sprintf('/svc/books/%s/%s.%s', $this->getVersion(), $path, $this->getFormat());
 
-        try {
-            $client = new Client([
-                'base_uri' => $this->getServiceUrl()
-            ]);
-            return $client->request('GET', $path, array(
-                    'query' => $query
-                )
-            );
-        } catch (RequestException $zhce) {
-            $message = 'Error in request to Web service: ' . $zhce->getMessage();
-            throw new \Exception($message, $zhce->getCode());
-        } catch (ClientException $zhce) {
-            $message = 'Error in request to Web service: ' . $zhce->getMessage();
-            throw new \Exception($message, $zhce->getCode());
-        }
     }
+
+    protected function getClient()
+    {
+
+        $client = new Client();
+        $description = new Description([
+            'apiVersion' => $this->getVersion(),
+            'baseUri' => $this->getServiceUrl(),
+            'operations' => [
+                'lists' => [
+                    'httpMethod' => 'GET',
+                    'uri' => $this->pathHelper('lists'),
+                    'responseModel' => 'getResponse',
+                    'parameters' => [
+                        'api-key' => [
+                            'type' => 'string',
+                            'required' => true,
+                            'location' => 'query'
+                        ],
+                        'list' => [
+                            'type' => 'string',
+                            'location' => 'query'
+                        ],
+                        'weeks-on-list' => [
+                            'type' => 'integer',
+                            'location' => 'query'
+                        ],
+                        'bestsellers-date' => [
+                            'type' => 'date-time',
+                            'required' => false,
+                            'location' => 'query',
+                        ],
+                        'date' => [
+                            'type' => 'string',
+                            'required' => false,
+                            'location' => 'query'
+                        ],
+                        'isbn' => [
+                            'type' => 'string',
+                            'location' => 'query'
+                        ],
+                        'published-date' => [
+                            'type' => 'string',
+                            'required' => false,
+                            'location' => 'query'
+                        ],
+                        'rank' => [
+                            'type' => 'integer',
+                            'location' => 'query'
+                        ],
+                        'rank-last-week' => [
+                            'type' => 'integer',
+                            'location' => 'query'
+                        ],
+                        'offset' => [
+                            'type' => 'integer',
+                            'location' => 'query'
+                        ],
+                        'sort-order' => [
+                            'type' => 'string',
+                            'location' => 'query'
+                        ]
+                    ]
+                ],
+                'history' => [
+                    'httpMethod' => 'GET',
+                    'uri' => $this->pathHelper('lists/best-sellers/history'),
+                    'responseModel' => 'getResponse',
+                    'parameters' => [
+                        'age-group' => [
+                            "location" => "query",
+                            "description" => "The target age group for the best seller.",
+                            "type" => "string"
+                        ],
+                        'author' => [
+                            "location" => "query",
+                            "description" => "The author of the best seller. The author field does not include additional contributors (see Data Structure for more details about the author and contributor fields).\n\nWhen searching the author field, you can specify any combination of first, middle and last names.\n\nWhen sort-by is set to author, the results will be sorted by author's first name. ",
+                            "type" => "string"
+                        ],
+                        'contributor' => [
+                            "name" => "contributor",
+                            "location" => "query",
+                            "description" => "The author of the best seller, as well as other contributors such as the illustrator (to search or sort by author name only, use author instead).\n\nWhen searching, you can specify any combination of first, middle and last names of any of the contributors.\n\nWhen sort-by is set to contributor, the results will be sorted by the first name of the first contributor listed. ",
+                            "type" => "string"
+                        ],
+                        'isbn' => [
+                            "location" => "query",
+                            "description" => "International Standard Book Number, 10 or 13 digits\n\nA best seller may have both 10-digit and 13-digit ISBNs, and may have multiple ISBNs of each type. To search on multiple ISBNs, separate the ISBNs with semicolons (example: 9780446579933;0061374229).",
+                            "type" => "string"
+                        ],
+                        'price' => [
+                            "location" => "query",
+                            "description" => "The publisher's list price of the best seller, including decimal point",
+                            "type" => "string"
+                        ],
+                        'publisher' => [
+                            "location" => "query",
+                            "description" => "The standardized name of the publisher",
+                            "type" => "string"
+                        ],
+                        'title' => [
+                            "location" => "query",
+                            "description" => "The title of the best seller\n\nWhen searching, you can specify a portion of a title or a full title.",
+                            "type" => "string"
+                        ],
+                        'api-key' => [
+                            "location" => "query",
+                            'required' => true,
+                            "description" => "api key",
+                            "type" => "string"
+                        ]
+                    ]
+                ],
+                'listNames' => [
+                    'httpMethod' => 'GET',
+                    'uri' => $this->pathHelper('lists/names'),
+                    'responseModel' => 'getResponse',
+                    'parameters' => [
+                        'api-key' => [
+                            'type' => 'string',
+                            'required' => true,
+                            'location' => 'query'
+                        ]
+                    ]
+                ],
+                'overview' => [
+                    'httpMethod' => 'GET',
+                    'uri' => $this->pathHelper('lists/overview'),
+                    'responseModel' => 'getResponse',
+                    'parameters' => [
+                        'api-key' => [
+                            'type' => 'string',
+                            'required' => true,
+                            'location' => 'query'
+                        ],
+                        'published_date' => [
+                            'type' => 'string',
+                            'location' => 'query'
+                        ],
+                    ]
+                ],
+                'listsByDate' => [
+                    'httpMethod' => 'GET',
+                    'uri' => $this->pathHelper('lists/{date}/{list}'),
+                    'responseModel' => 'getResponse',
+                    'parameters' => [
+                        'api-key' => [
+                            'type' => 'string',
+                            'required' => true,
+                            'location' => 'query'
+                        ],
+                        'date' => [
+                            'type' => 'string',
+                            'required' => true,
+                            'location' => 'uri'
+                        ],
+                        'list' => [
+                            'type' => 'string',
+                            'required' => true,
+                            'location' => 'uri'
+                        ],
+                        'isbn' => [
+                            'type' => 'integer',
+                            'location' => 'query'
+                        ],
+                        'list-name' => [
+                            'type' => 'string',
+                            'location' => 'query'
+                        ],
+                        'published-date' => [
+                            'type' => 'date-time',
+                            'location' => 'query'
+                        ],
+                        'bestsellers-date' => [
+                            'type' => 'string',
+                            'location' => 'query'
+                        ],
+                        'weeks-on-list' => [
+                            'type' => 'integer',
+                            'location' => 'query'
+                        ],
+                        'rank' => [
+                            'type' => 'string',
+                            'location' => 'query'
+                        ],
+                        'rank-last-week' => [
+                            'type' => 'integer',
+                            'location' => 'query'
+                        ],
+                        'offset' => [
+                            'type' => 'integer',
+                            'location' => 'query'
+                        ],
+                        'sort-order' => [
+                            'type' => 'string',
+                            'location' => 'query'
+                        ],
+                    ],
+                ],
+                'reviews' => [
+                    'httpMethod' => 'GET',
+                    'uri' => $this->pathHelper('reviews'),
+                    'responseModel' => 'getResponse',
+                    'parameters' => [
+                        'api-key' => [
+                            'type' => 'string',
+                            'required' => true,
+                            'location' => 'query'
+                        ],
+                        'isbn' => [
+                            'type' => 'integer',
+                            'location' => 'query'
+                        ],
+                        'title' => [
+                            'type' => 'string',
+                            'location' => 'query'
+                        ],
+                        'author' => [
+                            'type' => 'string',
+                            'location' => 'query'
+                        ],
+                    ]
+                ],
+            ],
+            'models' => [
+                'getResponse' => [
+                    'type' => 'object',
+                    'additionalProperties' => [
+                        'location' => 'json'
+                    ]
+                ]
+            ]
+        ]);
+
+        $guzzleClient = new GuzzleClient($client, $description);
+        return $guzzleClient;
+    }
+
 
     /**
      * @return string

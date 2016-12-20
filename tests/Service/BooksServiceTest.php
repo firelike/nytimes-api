@@ -1,6 +1,8 @@
 <?php
 namespace Firelike\NYTimes\Test\Service;
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 require_once __DIR__ . '/../../src/Service/BooksService.php';
 
 require_once __DIR__ . '/../../src/Request/AbstractRequest.php';
