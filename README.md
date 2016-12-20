@@ -1,5 +1,7 @@
 ## NY Times API Client
 
+[![Build Status](https://travis-ci.org/firelike/nytimes-api.svg?branch=master)](https://travis-ci.org/firelike/nytimes-api)
+
 ## Introduction
 
 Zend Framework module to consume NY Times API
@@ -11,7 +13,7 @@ Install the module using Composer into your application's vendor directory. Add 
 ```json
 {
     "require": {
-        "firelike/nytimes-api": "^1.*"
+        "firelike/nytimes-api": "^1.1"
     }
 }
 ```
