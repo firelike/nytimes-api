@@ -1,6 +1,8 @@
 ## NY Times API Client
 
 [![Build Status](https://travis-ci.org/firelike/nytimes-api.svg?branch=master)](https://travis-ci.org/firelike/nytimes-api)
+[![License](https://poser.pugx.org/firelike/nytimes-api/license?format=flat-square)](https://packagist.org/packages/firelike/nytimes-api)
+
 
 ## Introduction
 
