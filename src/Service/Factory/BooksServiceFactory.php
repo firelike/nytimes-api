@@ -4,7 +4,7 @@ namespace Firelike\NYTimes\Service\Factory;
 
 use Firelike\NYTimes\Service\BooksService;
 use GuzzleHttp\Command\Guzzle\Description;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use GuzzleHttp\Client;
 

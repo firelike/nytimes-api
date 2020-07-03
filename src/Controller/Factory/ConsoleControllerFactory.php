@@ -3,7 +3,7 @@ namespace Firelike\NYTimes\Controller\Factory;
 
 
 use Firelike\NYTimes\Controller\ConsoleController;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 

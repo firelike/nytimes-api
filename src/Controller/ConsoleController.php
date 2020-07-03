@@ -7,7 +7,7 @@ use Firelike\NYTimes\Request\Books\ListNames;
 use Firelike\NYTimes\Request\Books\Lists;
 use Firelike\NYTimes\Request\Books\Overview;
 use Firelike\NYTimes\Request\Books\Reviews;
-use Zend\Mvc\Console\Controller\AbstractConsoleController;
+use Laminas\Mvc\Console\Controller\AbstractConsoleController;
 
 
 class ConsoleController extends AbstractConsoleController

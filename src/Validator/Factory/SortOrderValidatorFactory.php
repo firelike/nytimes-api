@@ -4,7 +4,7 @@ namespace Firelike\NYTimes\Validator\Factory;
 
 use Firelike\NYTimes\Validator\SortOrderValidator;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class SortOrderValidatorFactory implements FactoryInterface
 {

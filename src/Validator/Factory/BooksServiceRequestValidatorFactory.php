@@ -4,7 +4,7 @@ namespace Firelike\NYTimes\Validator\Factory;
 
 use Firelike\NYTimes\Validator\BooksServiceRequestValidator;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class BooksServiceRequestValidatorFactory implements FactoryInterface
 {

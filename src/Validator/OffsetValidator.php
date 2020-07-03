@@ -2,8 +2,8 @@
 namespace Firelike\NYTimes\Validator;
 
 
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\Callback;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\Callback;
 
 class OffsetValidator extends AbstractValidator
 {

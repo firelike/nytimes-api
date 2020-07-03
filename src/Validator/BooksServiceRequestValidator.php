@@ -3,8 +3,8 @@ namespace Firelike\NYTimes\Validator;
 
 
 use Firelike\NYTimes\Request\AbstractRequest;
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\Isbn\Isbn13;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\Isbn\Isbn13;
 
 class BooksServiceRequestValidator extends AbstractValidator
 {
