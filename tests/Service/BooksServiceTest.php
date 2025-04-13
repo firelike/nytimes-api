@@ -30,8 +30,9 @@ use GuzzleHttp\Command\Guzzle\Description;
 use GuzzleHttp\Command\ResultInterface;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 
-class BooksServiceTest extends \PHPUnit_Framework_TestCase
+class BooksServiceTest extends TestCase
 {
 
     /**
@@ -39,7 +40,7 @@ class BooksServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected $service;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
